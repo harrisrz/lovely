@@ -64,40 +64,47 @@
                 </div>
             </div>
             <div class="humberger__menu__widget">
+                @guest
                 <div class="header__top__right__language">
                     <div class="header__top__right__auth">
-                        <a href="#"><i class="fa fa-user"></i> Login</a>
+                        <a href="{{ route('login') }}"><i class="fa fa-user"></i> Login</a>
+                    </div>
+                </div>
+                <div class="header__top__right__auth" style="margin-left: 20px">
+                    <a href="{{ route('register') }}"><i class="fa fa-user"></i> Register</a>
+                </div>
+                @else
+                <div class="header__top__right__language">
+                    <div class="header__top__right__auth">
+                        <a href=""><i class="fa fa-user"></i>{{ auth()->user()->name}}</a>
                     </div>
                     <span class="arrow_carrot-down"></span>
                     <ul>
-                        <li><a href="#">Spanis</a></li>
-                        <li><a href="#">English</a></li>
+                        <li><a href="#">Profile</a></li>
                     </ul>
                 </div>
                 <div class="header__top__right__auth" style="margin-left: 20px">
-                    <a href="#"><i class="fa fa-user"></i> Register</a>
+                    <a href="#" onclick="event.preventdefault();document.getElementById('logout-form').submit();"><i class="fa fa-user"></i> Logout</a>
+                    <form action="{{ route('logout') }}" id="logout-form" method="POST">
+                        @csrf
+                    </form>
                 </div>
+                @endguest
             </div>
             <nav class="humberger__menu__nav mobile-menu">
                 <ul>
-                    <li class="active"><a href="./index.html">Home</a></li>
+                    <li><a href="./index.html">Home</a></li>
                     <li><a href="./shop-grid.html">Shop</a></li>
                     <li>
                         <a href="#">Categories</a>
                         <ul class="header__menu__dropdown">
+                            @foreach($menu_categories as $menu_category)
                             <li>
-                                <a href="./shop-details.html">Shop Details</a>
+                                <a href="{{ route('shop.index', $menu_category->slug) }}">{{ $menu_category->name }}</a>
                             </li>
-                            <li>
-                                <a href="./shoping-cart.html">Shoping Cart</a>
-                            </li>
-                            <li><a href="./checkout.html">Check Out</a></li>
-                            <li>
-                                <a href="./blog-details.html">Blog Details</a>
-                            </li>
+                            @endforeach
                         </ul>
-                    </li>
-                    <li><a href="./blog.html">Blog</a></li>
+                        </li>
                     <li><a href="./contact.html">Contact</a></li>
                 </ul>
             </nav>
@@ -109,10 +116,7 @@
                 <a href="#"><i class="fa fa-pinterest-p"></i></a>
             </div>
             <div class="humberger__menu__contact">
-                <ul>
-                    <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
-                    <li>Free Shipping for all Order of $99</li>
-                </ul>
+                
             </div>
         </div>
         <!-- Humberger End -->
@@ -123,7 +127,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-6 col-md-6">
-                            <div class="header__top__left">
+                            {{-- <div class="header__top__left">
                                 <ul>
                                     <li>
                                         <i class="fa fa-envelope"></i>
@@ -131,28 +135,48 @@
                                     </li>
                                     <li>Free Shipping for all Order of $99</li>
                                 </ul>
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="col-lg-6 col-md-6">
-                            <div class="header__top__right">
-                                <div
-                                    class="header__top__right__language header__top__right__auth"
+                           @guest
+                           <div class="header__top__right">
+                            <div
+                                class="header__top__right__language header__top__right__auth"
+                            >
+                                <a class="d-inline" href="{{ route('login')}}"
+                                    ><i class="fa fa-user"></i> Login</a
                                 >
-                                    <a class="d-inline" href="#"
-                                        ><i class="fa fa-user"></i> Login</a
-                                    >
-                                    <span class="arrow_carrot-down"></span>
-                                    <ul>
-                                        <li><a href="#">Spanis</a></li>
-                                        <li><a href="#">English</a></li>
-                                    </ul>
-                                </div>
-                                <div class="header__top__right__auth">
-                                    <a href="#"
-                                        ><i class="fa fa-user"></i> Register</a
-                                    >
-                                </div>
+                                <span class="arrow_carrot-down"></span>
                             </div>
+                            <div class="header__top__right__auth">
+                                <a href="{{ route('login')}}"
+                                    ><i class="fa fa-user"></i> Register</a
+                                >
+                            </div>
+                        </div>
+                           @else
+                           <div class="header__top__right">
+                            <div
+                                class="header__top__right__language header__top__right__auth"
+                            >
+                                <a class="d-inline" href="#"
+                                    ><i class="fa fa-user"></i> {{ auth()->user()->name }}</a
+                                >
+                                <span class="arrow_carrot-down"></span>
+                                <ul>
+                                    <li><a href="#">Profile</a></li>
+                                </ul>
+                            </div>
+                            <div class="header__top__right__auth">
+                                <a href="#" onclick="event.preventDefault();document.getElementById('logout-form').submit();"
+                                    ><i class="fa fa-user"></i> Logout</a
+                                >
+                                <form action="{{ route('logout') }}" id="logout-form" method="post">
+                                    @csrf
+                                </form>
+                            </div>
+                        </div>
+                           @endguest
                         </div>
                     </div>
                 </div>
@@ -162,43 +186,28 @@
                     <div class="col-lg-3">
                         <div class="header__logo">
                             <a href="./index.html"
-                                ><img src="{{ asset('frontend/img/lovelyacc11.jpg') }}" alt=""
+                                ><img src="{{ asset('frontend/img/lovely.png') }}" alt=""
                             /></a>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <nav class="header__menu">
                             <ul>
-                                <li class="active">
+                                <li> </li>
+                                <li>
                                     <a href="./index.html">Home</a>
                                 </li>
                                 <li><a href="./shop-grid.html">Shop</a></li>
                                 <li>
                                     <a href="#">Categories</a>
                                     <ul class="header__menu__dropdown">
+                                        @foreach($menu_categories as $menu_category)
                                         <li>
-                                            <a href="./shop-details.html"
-                                                >Shop Details</a
-                                            >
+                                            <a href="{{ route('shop.index', $menu_category->slug) }}">{{ $menu_category->name }}</a>
                                         </li>
-                                        <li>
-                                            <a href="./shoping-cart.html"
-                                                >Shoping Cart</a
-                                            >
-                                        </li>
-                                        <li>
-                                            <a href="./checkout.html"
-                                                >Check Out</a
-                                            >
-                                        </li>
-                                        <li>
-                                            <a href="./blog-details.html"
-                                                >Blog Details</a
-                                            >
-                                        </li>
+                                        @endforeach
                                     </ul>
-                                </li>
-                                <li><a href="./blog.html">Blog</a></li>
+                                    </li>
                                 <li><a href="./contact.html">Contact</a></li>
                             </ul>
                         </nav>
@@ -275,7 +284,7 @@
                         <div class="footer__about">
                             <div class="footer__about__logo">
                                 <a href="./index.html"
-                                    ><img src="{{ asset('frontend/img/lovelyacc11.jpg') }}" alt=""
+                                    ><img src="{{ asset('frontend/img/lovely.png') }}" alt=""
                                 /></a>
                             </div>
                             <ul>
@@ -377,5 +386,6 @@
         <script src="{{ asset('frontend/js/mixitup.min.js') }}"></script>
         <script src="{{ asset('frontend/js/owl.carousel.min.js') }}"></script>
         <script src="{{ asset('frontend/js/main.js') }}"></script>
+        <script src="{{ asset('js/app.js') }}"></script>
     </body>
 </html>

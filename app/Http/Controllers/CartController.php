@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -34,7 +35,22 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $product = Product::findOrFail($request->productId);
+
+        $item = [
+            'id' => md5($product->id),
+            'name' => $product->name,
+            'price' => $product->price,
+            'quantity' => 1,
+            'associatedModel' => $product 
+        ];
+
+        \Cart::add($item);
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Successfully added to Cart !'
+        ]);
     }
 
     /**
