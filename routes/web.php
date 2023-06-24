@@ -24,6 +24,7 @@ Route::get('/order/checkout', [App\Http\Controllers\OrderController::class, 'pro
 // Route React
 Route::get('/products', [\App\Http\Controllers\HomeController::class, 'get_products']);
 Route::post('/carts', [\App\Http\Controllers\CartController::class, 'store']);
+Route::get('/carts', [\App\Http\Controllers\CartController::class, 'get_carts']);
 
 Route::group(['middleware' => ['auth', 'isAdmin'], 'prefix' => 'admin', 'as' => 'admin.'], function(){
     Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');

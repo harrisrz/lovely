@@ -13,7 +13,7 @@ const ProductList = () => {
             if (res.status === 200) {
                 setProducts(res.data.products);
             }
-            setLoading(false);
+            setLoading(false); 
         });
     }, []);
 
@@ -33,7 +33,7 @@ const ProductList = () => {
         products.length === 0 ? <h3>Product Empty</h3> : products.map((product) => {
             return (
                 <div key={product.id} className="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
-    <div className="featured__item">
+    <div className="featured__item"> 
         <div
             className="featured__item__pic set-bg" 
             style={{backgroundImage: `url(${product.media[0].original_url})`}}>

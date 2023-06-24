@@ -195,11 +195,11 @@
                             <ul>
                                 <li> </li>
                                 <li>
-                                    <a href="./index.html">Home</a>
+                                    <a href="/home">Home</a>
                                 </li>
-                                <li><a href="./shop-grid.html">Shop</a></li>
+                                {{-- <li><a href="./shop-grid.html">Shop</a></li> --}}
                                 <li>
-                                    <a href="#">Categories</a>
+                                    <a href="#">Product Categories</a>
                                     <ul class="header__menu__dropdown">
                                         @foreach($menu_categories as $menu_category)
                                         <li>
