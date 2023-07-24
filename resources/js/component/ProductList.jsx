@@ -32,7 +32,7 @@ const ProductList = () => {
     ) : (
         products.length === 0 ? <h3>Product Empty</h3> : products.map((product) => {
             return (
-                <div key={product.id} className="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
+                <div key={product.id} className="col-lg-3 col-md-4 col-sm-6">
     <div className="featured__item"> 
         <div
             className="featured__item__pic set-bg" 

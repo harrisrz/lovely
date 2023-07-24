@@ -89,9 +89,24 @@ class CartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update_carts(Request $request, $cart_id)
     {
-        //
+        \Cart::update($cart_id, [
+            'quantity' => [
+                'relative' => false,
+                'value' => $request->quantity
+            ]
+            ]);
+        
+        $carts = \Cart::getContent();
+        $cart_total = \Cart::getTotal();
+
+        return response()->json([
+            'status' => 200,
+            'carts' => $carts,
+            'cart_total' => $cart_total,
+            'message' => 'Updated Successfully!'
+        ]);
     }
 
     /**
@@ -100,8 +115,15 @@ class CartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete_carts($cart_id)
     {
-        //
+        \Cart::remove($cart_id);
+        $cart_total = \Cart::getTotal();
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Successfully Deleted Cart!',
+            'cart_total' => $cart_total,
+        ]);
     }
 }

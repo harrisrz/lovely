@@ -216,20 +216,16 @@
                         <div class="header__cart">
                             <ul>
                                 <li>
-                                    <a href="#"
-                                        ><i class="fa fa-heart"></i>
-                                        <span>1</span></a
-                                    >
+                                    <span>Cart</span>
                                 </li>
                                 <li>
-                                    <a href="#"
+                                    <a href="/cart"
                                         ><i class="fa fa-shopping-bag"></i>
-                                        <span>3</span></a
-                                    >
+                                        </a>
                                 </li>
                             </ul>
                             <div class="header__cart__price">
-                                item: <span>$150.00</span>
+                                item: <span> 0 </span>
                             </div>
                         </div>
                     </div>
@@ -263,7 +259,7 @@
                                     <i class="fa fa-phone"></i>
                                 </div>
                                 <div class="hero__search__phone__text">
-                                    <h5>+65 11.188.888</h5>
+                                    <h5>081350311133</h5>
                                     <span>support 24/7 time</span>
                                 </div>
                             </div>

@@ -18,9 +18,25 @@ const Cart = () => {
         });
     }, []);
 
-    // const updateCart = (quantity, cartId) = {
-    //     console.log('ok')
-    // }
+    const updateCart = (quantity, cartId) => {
+      axios.put(`carts/${cartId}`, {quantity}).then(res => {
+        if(res.status === 200){
+            setCarts(Object.values(res.data.carts));
+            setTotal(res.data.cart_total);
+            swal('Success', res.data.message, "success");
+        }
+      });  
+    };
+
+    const deleteCart = (cartId) => {
+        axios.delete(`carts/${cartId}`).then(res => {
+            if(res.status === 200) {
+                setCarts(carts.filter(cart => cart.id !== cartId))
+                setTotal(res.data.cart_total);
+                swal('Success', res.data.message, "success");
+            }
+        });
+    };
 
     return loading ? (
         <h3>Loading....</h3>
@@ -43,7 +59,7 @@ const Cart = () => {
                                 {
                                 carts.length === 0 ? <tr>
                                     <td colSpan={7}>
-                                        Cart is Empty <a href="/shop/cincin" className="btn btn-love">Go Shopping</a>
+                                        Cart is Empty <a href="/home" className="btn btn-love">Go Shopping</a>
                                     </td>
                                 </tr> : (
                                 carts.map((cart,index) =>{
@@ -59,7 +75,9 @@ const Cart = () => {
                                     <td className="shoping__cart__quantity">
                                         <div className="quantity">
                                             <div className="pro-qty">
-                                                <select value={cart.quantity} onChange={(e) => updateCart(e.target.value, cart.id)}>
+                                                <select 
+                                                className="form-control"
+                                                value={cart.quantity} onChange={(e) => updateCart(e.target.value, cart.id)}>
                                                     {[
                                                         ...Array(cart.associatedModel.quantity).keys()
                                                     ].map(x => {
@@ -73,7 +91,7 @@ const Cart = () => {
                                         Rp. {cart.price * cart.quantity}
                                     </td>
                                     <td className="shoping__cart__item__close">
-                                        <span className="icon_close"></span>
+                                        <span className="icon_close" onClick={() => deleteCart(cart.id)}></span>
                                     </td>
                                 </tr>
                                 );
@@ -87,10 +105,10 @@ const Cart = () => {
             <div className="row">
                 <div className="col-lg-12">
                     <div className="shoping__cart__btns">
-                        <a href="/shop/cincin" className="primary-btn cart-btn">CONTINUE SHOPPING</a>
+                        <a href="/home" className="love-btn cart-btn">CONTINUE SHOPPING</a>
                     </div>
                 </div>
-                <div className="col-lg-6">
+                {/* <div className="col-lg-6">
                     <div className="shoping__continue">
                         <div className="shoping__discount">
                             <h5>Discount Codes</h5>
@@ -100,15 +118,15 @@ const Cart = () => {
                             </form>
                         </div>
                     </div>
-                </div>
+                </div> */}
                 <div className="col-lg-6">
                     <div className="shoping__checkout">
                         <h5>Cart Total</h5>
                         <ul>
-                            <li>Subtotal <span>$454.98</span></li>
-                            <li>Total <span>$454.98</span></li>
+                            <li>Subtotal <span>Rp. {totalCart}</span></li>
+                            <li>Total <span>Rp. {totalCart}</span></li>
                         </ul>
-                        <a href="#" className="primary-btn">PROCEED TO CHECKOUT</a>
+                        <a href="/order/checkout" className="primary-btn">PROCEED TO CHECKOUT</a>
                     </div>
                 </div>
             </div>

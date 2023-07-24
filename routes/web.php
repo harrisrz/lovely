@@ -23,8 +23,16 @@ Route::get('/order/checkout', [App\Http\Controllers\OrderController::class, 'pro
 
 // Route React
 Route::get('/products', [\App\Http\Controllers\HomeController::class, 'get_products']);
+Route::get('products/{slug?}', [\App\Http\Controllers\ShopController::class, 'getProducts']);
+Route::get('product-detail/{product:slug}', [\App\Http\Controllers\ProductController::class, 'getProductDetail']);
 Route::post('/carts', [\App\Http\Controllers\CartController::class, 'store']);
 Route::get('/carts', [\App\Http\Controllers\CartController::class, 'get_carts']);
+Route::put('/carts/{cart_id}', [\App\Http\Controllers\CartController::class, 'update_carts']);
+Route::delete('/carts/{cart_id}', [\App\Http\Controllers\CartController::class, 'delete_carts']);
+
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('/order/checkout', [\App\Http\Controllers\OrderController::class, 'process'])->name('checkout.process');
+    Route::post('/order/checkout', [App\Http\Controllers\OrderController::class, 'checkout'])->name('checkout.checkout');
 
 Route::group(['middleware' => ['auth', 'isAdmin'], 'prefix' => 'admin', 'as' => 'admin.'], function(){
     Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
@@ -37,6 +45,7 @@ Route::group(['middleware' => ['auth', 'isAdmin'], 'prefix' => 'admin', 'as' => 
     Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);
     Route::post('products/image', [\App\Http\Controllers\Admin\ProductController::class, 'storeImage'])->name('products.storeImage');
 
+});
 });
 
 
